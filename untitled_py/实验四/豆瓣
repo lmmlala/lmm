@@ -1,0 +1,26 @@
+import urllib.request
+import json
+
+def getMsg(start):
+    url = f' https://movie.douban.com/j/chart/top_list?type=13&interval_id=100%3A90&action=&start={start}&limit=20'
+    headers = {
+        'User-Agent': ' Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    }
+    request = urllib.request.Request(url=url, headers=headers)
+    content = urllib.request.urlopen(request).read().decode('utf-8')
+    msg = json.loads(content)[0]
+    # print(msg,type(msg))
+    print(f"评分：{msg['score']},名字：{msg['title']}")
+    print("主演：")
+    for actor in msg["actors"]:
+        print(actor)
+
+    # print(msg["actors"])
+
+
+
+i = 0;
+while(i<=100):
+    getMsg(i);
+    print(f">>>>>>>>>>>>>>>>>>>>>>>>>>>{i}~{i+20}条数据")
+    i = i+20
